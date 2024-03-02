@@ -37,5 +37,7 @@ _curl 'http://IPADDRESS/ajax/get-registers' \
   --insecure__
 
 6) repeat this for all commands which you want to be able to trigger from home assistant
-   
-
+7) Turn the curls into shell commands (See my example shell commands)
+8) Add the shell commands into you home assistant config.yaml
+![image](https://github.com/jeffreybrits/Winet_Pellet_Stove/assets/55175145/0b648b07-b997-4d15-a8a2-0efffeb2ff8a)
+9) call all the shell commands from any automations you want
