@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "input_boolean",
+  "data": {
+    "items": [
+      {
+        "id": "pellet_stover_power",
+        "name": "Pellet Stover Power",
+        "icon": "mdi:fireplace"
+      },
+      {
+        "id": "pellet_stove_failed_power_on",
+        "name": "Pellet Stove Failed Power On",
+        "icon": "mdi:robot-confused"
+      },
+      {
+        "id": "pellet_stove_failed_power_off",
+        "name": "Pellet Stove Failed Power Off",
+        "icon": "mdi:robot-confused"
+      },
+      {
+        "id": "pellet_stove_failed_power_1",
+        "name": "Pellet Stove Failed Power 1",
+        "icon": "mdi:robot-confused"
+      },
+      {
+        "id": "pellet_stove_failed_power_2",
+        "name": "Pellet Stove Failed Power 2",
+        "icon": "mdi:robot-confused"
+      },
+      {
+        "id": "pellet_stove_failed_power_3",
+        "name": "Pellet Stove Failed Power 3",
+        "icon": "mdi:robot-confused"
+      },
+      {
+        "id": "pellet_stove_failed_power_4",
+        "name": "Pellet Stove Failed Power 4",
+        "icon": "mdi:robot-confused"
+      }
+    ]
+  }
+}
