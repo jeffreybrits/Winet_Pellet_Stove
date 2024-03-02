@@ -1,0 +1,26 @@
+shell_command:
+  stove_power_1: bash /config/shell/stove/power1.sh
+  stove_power_2: bash /config/shell/stove/power2.sh
+  stove_power_3: bash /config/shell/stove/power3.sh
+  stove_power_4: bash /config/shell/stove/power4.sh
+  stove_power_5: bash /config/shell/stove/power5.sh
+  stove_toggle_power_on: bash /config/shell/stove/toggle_power_on.sh
+  stove_toggle_power_off: bash /config/shell/stove/toggle_power_off.sh
+  stove_get_status: bash /config/shell/stove/get_status.sh
+
+climate:
+  - platform: generic_thermostat
+    name: Living Room
+    #I've created a helper input boolean to trigger from the generic thermostat in my automations i use this to trigger the power on and power off shell commands
+    heater: input_boolean.pellet_stover_power 
+    target_sensor: sensor.living_room_temperature_temperature
+    target_temp: 15
+    home_temp: 20
+    comfort_temp: 21
+    away_temp: 14
+    sleep_temp: 15
+    cold_tolerance: 0.5
+    hot_tolerance: 0.5
+    min_cycle_duration:
+      minutes: 15
+    precision: 0.5
