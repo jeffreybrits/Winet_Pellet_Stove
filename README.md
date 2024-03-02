@@ -35,5 +35,7 @@ _curl 'http://IPADDRESS/ajax/get-registers' \
 _curl 'http://IPADDRESS/ajax/get-registers' \
   --data-raw 'key=020&category=2' \
   --insecure__
+
+6) repeat this for all commands which you want to be able to trigger from home assistant
    
 
