@@ -1,3 +1,7 @@
+homeassistant:
+  allowlist_external_dirs:
+    - "/config"
+
 shell_command:
   stove_power_1: bash /config/shell/stove/power1.sh
   stove_power_2: bash /config/shell/stove/power2.sh
