@@ -1,0 +1,422 @@
+#I created a schedule helper for the afternoon and the weekend during which i want the pellet stove to go to mode 2 and set the thermostat to the home preset during the specified hours.
+#Addiutionally when i switch the thermostat in HA to Home i also want to stove to be set to power 2.
+- id: '666777555'
+  alias: Pellet Stove turn on Home New
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.pellet_stove_schedule_afternoon_and_weekend
+    to: 'on'
+  - platform: state
+    entity_id:
+    - climate.living_room
+    attribute: preset_mode
+    to: home
+  action:
+  - service: climate.set_preset_mode
+    metadata: {}
+    data:
+      preset_mode: home
+    target:
+      entity_id: climate.living_room
+  - service: shell_command.stove_power_2
+    data: {}
+#In the mornings during the work week i want the thermostat to preset "away" and the stover to power mode 1
+- id: '1708979070400'
+  alias: Pellet Stove Set Away Mode New
+  description: Set Pellet Stove to Away
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.pellet_stove_schedule_ochtend
+    to: 'off'
+  - platform: state
+    entity_id:
+    - climate.living_room
+    attribute: preset_mode
+    to: away
+  action:
+  - service: climate.set_preset_mode
+    metadata: {}
+    data:
+      preset_mode: away
+    target:
+      entity_id: climate.living_room
+  - service: shell_command.stove_power_1
+    data: {}
+  mode: single
+#In the morning  during the work week i want the stove to be set to power mode 3 and the thermostat to be set to preset "Comfort"
+- id: '1708979247194'
+  alias: Pellet Stove Set Comfort New
+  description: Turn On the pellet stove on comfort mode in the morning
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.pellet_stove_schedule_ochtend
+    to: 'on'
+  - platform: state
+    entity_id:
+    - climate.living_room
+    attribute: preset_mode
+    to: comfort
+  condition: []
+  action:
+  - service: climate.set_preset_mode
+    metadata: {}
+    data:
+      preset_mode: comfort
+    target:
+      entity_id: climate.living_room
+  - service: shell_command.stove_power_3
+    data: {}
+  mode: single
+- id: '1708979528076'
+  alias: Pellet Stove Set Night mode New
+  description: Set Night mode on Pellet Stove at the end of the schedule
+  trigger:
+  - platform: state
+    entity_id:
+    - schedule.pellet_stove_schedule_afternoon_and_weekend
+    to: 'off'
+  - platform: state
+    entity_id:
+    - climate.living_room
+    attribute: preset_mode
+    to: sleep
+  condition: []
+  action:
+  - service: climate.set_preset_mode
+    metadata: {}
+    data:
+      preset_mode: sleep
+    target:
+      entity_id: climate.living_room
+  - service: shell_command.stove_power_1
+    data: {}
+  mode: single
+- id: '1708980023144'
+  alias: Pellet Stove Power on New
+  description: Use helper for thermostat to turn Pellet stove
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.pellet_stover_power
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  condition: []
+  action:
+  - service: shell_command.stove_toggle_power_on
+    data: {}
+  mode: single
+- id: '1708980233482'
+  alias: Pellet Stove Power Off New
+  description: Use helper for thermostat to turn Pellet stove off
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.pellet_stover_power
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  condition: []
+  action:
+  - service: shell_command.stove_toggle_power_off
+    data: {}
+  mode: single
+- id: '1708980986418'
+  alias: Pellet stove Power 1 Retry
+  description: Retry to send power 1 command to pellet stove when failed
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.pellet_stove_failed_power_1
+    to: 'on'
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_1
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: shell_command.stove_power_1
+    data: {}
+  mode: single
+- id: '17089809864181'
+  alias: Pellet stove Power 2 Retry
+  description: Retry to send power 2 command to pellet stove when failed
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.pellet_stove_failed_power_2
+    to: 'on'
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_2
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: shell_command.stove_power_2
+    data: {}
+  mode: single
+- id: '17089809864182'
+  alias: Pellet stove power 3 Retry
+  description: Retry to send power 3 command to pellet stove when failed
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.pellet_stove_failed_power_3
+    to: 'on'
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_3
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: shell_command.stove_power_3
+    data: {}
+  mode: single
+- id: '17089809864183'
+  alias: Pellet stove power 4 Retry
+  description: Retry to send power 4 command to pellet stove when failed
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.pellet_stove_failed_power_4
+    to: 'on'
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_4
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: shell_command.stove_power_4
+    data: {}
+  mode: single
+- id: '17089809864184'
+  alias: Pellet stove power on Retry
+  description: Retry to send power on command to pellet stove when failed
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.pellet_stove_failed_power_on
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+  condition: []
+  action:
+  - service: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_on
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: shell_command.stove_toggle_power
+    data: {}
+  mode: single
+- id: '17089809864185'
+  alias: Pellet stove power off Retry
+  description: Retry to send power off command to pellet stove when failed
+  trigger:
+  - platform: state
+    entity_id:
+    - input_boolean.pellet_stove_failed_power_off
+    to: 'on'
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: input_boolean.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_off
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: shell_command.stove_toggle_power
+    data: {}
+  mode: single
+- id: '1709381323375'
+  alias: Pellet Stove Get Status
+  description: Get Status of Pellet Stove Every 5 Minutes
+  trigger:
+  - platform: time_pattern
+    minutes: /1
+  condition: []
+  action:
+  - service: shell_command.stove_get_status
+    metadata: {}
+    data: {}
+  mode: single
+- id: '1709381634168'
+  alias: Pellet Stove power 1 Failed
+  description: Turn on pellet stove power 1 failed on when API call fails
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.stove_api_call_power_1
+    to: 'False'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_1
+  mode: single
+- id: '1709381634166'
+  alias: Pellet Stove power 2 Failed
+  description: Turn on pellet stove power 2 failed on when API call fails
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.stove_api_call_power_2
+    to: 'False'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_2
+  mode: single
+- id: '170938163416666'
+  alias: Pellet Stove power 3 Failed
+  description: Turn on pellet stove power 3 failed on when API call fails
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.stove_api_call_power_3
+    to: 'False'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_3
+  mode: single
+- id: '17093816341655'
+  alias: Pellet Stove power 4 Failed
+  description: Turn on pellet stove power 4 failed on when API call fails
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.stove_api_call_power_4
+    to: 'False'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_4
+  mode: single
+- id: '1709381634165555'
+  alias: Pellet Stove power 5 Failed
+  description: Turn on pellet stove power 5 failed on when API call fails
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.stove_api_call_power_5
+    to: 'False'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_5
+  mode: single
+- id: '170938163416511'
+  alias: Pellet Stove turn on Failed
+  description: Turn on pellet stove Turn on failed on when API call fails
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.stove_api_call_toggle_power_on
+    to: 'False'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_on
+  mode: single
+- id: '170938163416515'
+  alias: Pellet Stove turn off Failed
+  description: Turn on pellet stove Turn on failed on when API call fails
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.stove_api_call_toggle_power_off
+    to: 'False'
+  condition: []
+  action:
+  - service: input_boolean.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: input_boolean.pellet_stove_failed_power_off
+  mode: single
