@@ -1,0 +1,50 @@
+- platform: file
+  name: Stove API Call Power 1
+  file_path: /config/shell/stove/response_power1.txt
+  value_template: "{{ value_json.result }}"
+  scan_interval: 1
+- platform: file
+  name: Stove API Call Power 2
+  file_path: /config/shell/stove/response_power2.txt
+  value_template: "{{ value_json.result }}"
+  scan_interval: 1
+- platform: file
+  name: Stove API Call Power 3
+  file_path: /config/shell/stove/response_power3.txt
+  value_template: "{{ value_json.result }}"
+  scan_interval: 1
+- platform: file
+  name: Stove API Call Power 4
+  file_path: /config/shell/stove/response_power4.txt
+  value_template: "{{ value_json.result }}"
+  scan_interval: 1
+- platform: file
+  name: Stove API Call Power 5
+  file_path: /config/shell/stove/response_power5.txt
+  value_template: "{{ value_json.result }}"
+  scan_interval: 1
+- platform: file
+  name: Stove API Call toggle power on
+  file_path: /config/shell/stove/response_toggle_power_on.txt
+  value_template: "{{ value_json.result }}"
+  scan_interval: 1
+- platform: file
+  name: Stove API Call toggle power off
+  file_path: /config/shell/stove/response_toggle_power_off.txt
+  value_template: "{{ value_json.result }}"
+  scan_interval: 1
+- platform: file
+  name: Stove API Call Get Status
+  file_path: /config/shell/stove/response_get_status.txt
+  value_template: "{{ value_json.params[1] }}"
+  scan_interval: 1
+- platform: file
+  name: Stove API Call Get temperature
+  file_path: /config/shell/stove/response_get_status.txt
+  value_template: "{{ value_json.params[6] }}"
+  scan_interval: 1
+- platform: file
+  name: Stove API Call Get Mode
+  file_path: /config/shell/stove/response_get_status.txt
+  value_template: "{{ value_json.params[7] }}"
+  scan_interval: 1
