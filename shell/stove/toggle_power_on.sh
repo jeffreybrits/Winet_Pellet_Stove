@@ -11,4 +11,4 @@ sleep 5
 
 curl -i -s -k -X $'POST' \
     --data-binary $'key=022' \
-    $'http://192.168.1.110/ajax/get-registers' > /config/shell/stove/response_toggle_power_on.txt
+    $'http://IPADDRESS/ajax/get-registers' > /config/shell/stove/response_toggle_power_on.txt
