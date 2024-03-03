@@ -11,4 +11,4 @@ sleep 5
 
 curl -i -s -k -X $'POST' \
     --data-binary $'key=002&memory=1&regId=51&value=2' \
-    $'http://192.168.1.110/ajax/set-register' > /config/shell/stove/response_power2.txt
+    $'http://IPADDRESS/ajax/set-register' > /config/shell/stove/response_power2.txt
